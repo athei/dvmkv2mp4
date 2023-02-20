@@ -143,11 +143,11 @@ for f in *.mkv;do
       elif [ "$dv_profile" -eq 4 ]; then
         dv_target=4
       else
-        dv_target=8
+        dv_target="8.1"
       fi
     elif [ ! -z "$hdr10plus" ]; then
       echo "Converting HDR10+ to DV8: \"$input\""
-      dv_target=8
+      dv_target="8.1"
       ffstring=("$ffstarthdr10plus")
       MaxDML=`mediainfo "$input" | grep 'Mastering display luminance' | cut -f 4 -d:`
       MaxDML=${MaxDML% cd*}
@@ -327,7 +327,7 @@ EOF
   mkvextract chapters -s "${input}" > chapters.list
   
   ### MUX MP4
-  mp4string=("$ionc MP4Box -add BL_RPU.hevc:dv-profile=$dv_target")
+  mp4string=("$ionc MP4Box -add BL_RPU.hevc:dvp=$dv_target")
   tcount=2
   while read i;do
     stream=`echo "$i" | cut -f1 -d\|`
